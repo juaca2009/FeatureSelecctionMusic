@@ -78,4 +78,4 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_
 #implementacion forward selection ramdom featureSelectionRandomForest
 #featureSelectionRandomForest(int(sys.argv[1]), x_train, y_train)
 
-data.to_csv('dataClean.csv', sep=',', header=True)
+data.to_csv('dataClean.csv', sep=',', header=True, index = False)
