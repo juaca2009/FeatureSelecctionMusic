@@ -31,7 +31,7 @@ def imprimirCorrelacion(_data):
 
 def featureSelectionNeighbors(_nFeatures, _xtrain, _ytrain):
     clf = NearestCentroid()
-    sfs = SFS(clf, k_features = _nFeatures, forward=True, floating=False, verbose=2, scoring='accuracy', n_jobs=-1).fit(_xtrain, _ytrain)
+    sfs = SFS(clf, k_features = _nFeatures, forward=True, floating=False, verbose=2, scoring='f1_macro', n_jobs=-1).fit(_xtrain, _ytrain)
     print(sfs.k_feature_names_)
 
 def featureSelectionDecision(_nFeatures, _xtrain, _ytrain):
@@ -49,33 +49,33 @@ def featureSelectionRandomForest(_nFeatures, _xtrain, _ytrain):
     sfs = SFS(random, k_features = _nFeatures, forward=True, floating=False, verbose=2, scoring='accuracy', n_jobs=-1).fit(_xtrain, _ytrain)
     print(sfs.k_feature_names_)
 
+def limpiarDatos():
+    #carga del data set 
+    _data = pd.read_csv("FeaturesObtain.csv", sep=',', header='infer')
+    #eliminacion columna nombre
+    _data = _data.drop(['Name','rof'], axis=1)
+    #codificacion variables categoricas
+    _data = codificarVariables(_data)
+    return data
 
+if __name__ == "__main__":
+    data = pd.read_csv("dataClean.csv", sep=',', header='infer')
+    #separacion de datos
+    x = data.iloc[:, 0:21]
+    y = data.iloc[:, -1]
 
-#carga del data set 
-data = pd.read_csv("FeaturesObtain.csv", sep=',', header='infer')
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0) 
 
-#eliminacion columna nombre
-data = data.drop(['Name','rof'], axis=1)
-
-#codificacion variables categoricas
-data = codificarVariables(data)
-
-#separacion de datos
-x = data.iloc[:, 0:21]
-y = data.iloc[:, -1]
-
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0) 
-
-#implementacion forward selection Nearest Neighbors
-#featureSelectionNeighbors(int(sys.argv[1]), x_train, y_train)
-
-#implementacion forward selection Decision Trees
-#featureSelectionDecision(int(sys.argv[1]), x_train, y_train)
-
-#implementacion forward selection stochastic
-#featureSelectionStochastic(int(sys.argv[1]), x_train, y_train)
-
-#implementacion forward selection ramdom featureSelectionRandomForest
-#featureSelectionRandomForest(int(sys.argv[1]), x_train, y_train)
-
-data.to_csv('dataClean.csv', sep=',', header=True, index = False)
+    #implementacion forward selection Nearest Neighbors
+    #featureSelectionNeighbors(int(sys.argv[1]), x_train, y_train)
+    
+    #implementacion forward selection Decision Trees
+    #featureSelectionDecision(int(sys.argv[1]), x_train, y_train)
+    
+    #implementacion forward selection stochastic
+    #featureSelectionStochastic(int(sys.argv[1]), x_train, y_train)
+    
+    #implementacion forward selection ramdom featureSelectionRandomForest
+    #featureSelectionRandomForest(int(sys.argv[1]), x_train, y_train)
+    
+    #data.to_csv('dataClean.csv', sep=',', header=True, index = False)
