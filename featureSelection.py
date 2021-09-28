@@ -9,7 +9,7 @@ from sklearn.neighbors import NearestCentroid
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.preprocessing import RobustScaler
 
 #definicion metodos
 def codificarVariables(_data):
@@ -22,6 +22,19 @@ def codificarVariables(_data):
             _data[c] = lbl.transform(list(_data[c].values))
     return _data
 
+
+def escalarAtributos(_data):
+    escalador = RobustScaler()
+    _data.iloc[:,2:3] = escalador.fit(_data.iloc[:,2:3]).transform(_data.iloc[:,2:3]) #lds
+    _data.iloc[:,4:5] = escalador.fit(_data.iloc[:,4:5]).transform(_data.iloc[:,4:5]) #strpk
+    _data.iloc[:,6:7] = escalador.fit(_data.iloc[:,6:7]).transform(_data.iloc[:,6:7]) #cntr
+    _data.iloc[:,8:9] = escalador.fit(_data.iloc[:,8:9]).transform(_data.iloc[:,8:9]) #entr
+    _data.iloc[:,9:10] = escalador.fit(_data.iloc[:,9:10]).transform(_data.iloc[:,9:10]) #danc
+    _data.iloc[:,10:11] = escalador.fit(_data.iloc[:,10:11]).transform(_data.iloc[:,10:11]) #bpm
+    _data.iloc[:,11:12] = escalador.fit(_data.iloc[:,11:12]).transform(_data.iloc[:,11:12]) #tufre
+    _data.iloc[:,13:14] = escalador.fit(_data.iloc[:,13:14]).transform(_data.iloc[:,13:14]) #tmpo
+    _data.iloc[:,16:21] = escalador.fit(_data.iloc[:,16:21]).transform(_data.iloc[:,16:21]) #mfccs
+    return _data
 
 
 def imprimirCorrelacion(_data):
@@ -68,6 +81,10 @@ def limpiarDatos():
 
 if __name__ == "__main__":
     data = pd.read_csv("dataClean.csv", sep=',', header='infer')
+
+    #escalamiento de atributos
+    data = escalarAtributos(data)
+
     #separacion de datos
     x = data.iloc[:, 0:21]
     y = data.iloc[:, -1]
@@ -84,6 +101,6 @@ if __name__ == "__main__":
     #featureSelectionStochastic(int(sys.argv[1]), x_train, y_train)
     
     #implementacion forward selection ramdom featureSelectionRandomForest
-    featureSelectionRandomForest(int(sys.argv[1]), x_train, y_train)
+    #featureSelectionRandomForest(int(sys.argv[1]), x_train, y_train)
     
     #data.to_csv('dataClean.csv', sep=',', header=True, index = False)
