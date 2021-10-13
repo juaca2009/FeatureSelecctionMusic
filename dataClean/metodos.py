@@ -6,11 +6,6 @@ from sklearn import preprocessing
 from sklearn.preprocessing import RobustScaler
 
 
-def imprimirCorrelacion(_data):
-    correlacion = _data.corr()
-    sns.heatmap(correlacion, annot = True)
-    plt.show()
-
 def eliminarColumna(_nombre, _data):
     _data = _data.drop(_nombre, axis=1)
     return _data
