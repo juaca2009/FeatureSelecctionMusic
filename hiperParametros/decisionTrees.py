@@ -39,19 +39,22 @@ class decisionTrees():
         self.__space = _space
 
     def objetive(self, _space):
-        modelo = DecisionTreeClassifier(criterion = _space['criterion'], splitter = _space['splitter'],
-                                        max_depth = _space['max_depth'], min_samples_split = _space['min_samples_split'],
-                                        min_samples_leaf = _space['min_samples_leaf'], max_features = _space['max_features'])
+        modelo = DecisionTreeClassifier(criterion = _space['criterion'], 
+                                        splitter = _space['splitter'],
+                                        max_depth = _space['max_depth'], 
+                                        min_samples_split = _space['min_samples_split'],
+                                        min_samples_leaf = _space['min_samples_leaf'], 
+                                        max_features = _space['max_features'])
         precision = cross_val_score(modelo, self.__xTrain, self.__yTrain, scoring="f1_micro", cv = 5).mean()
         return {'loss': -precision, 'status': STATUS_OK}
 
     def pruebas(self):
-        pruebas = Trials()
+        prueba = Trials()
         mejor = fmin(fn = self.objetive, 
                 space = self.getSpace(), 
                 algo = tpe.suggest, 
                 max_evals = 80, 
-                trials = pruebas)
+                trials = prueba)
         salida = {
                 'criterion': self.criterionConf[mejor['criterion']],
                 'splitter': self.splitterConf[mejor['splitter']],
