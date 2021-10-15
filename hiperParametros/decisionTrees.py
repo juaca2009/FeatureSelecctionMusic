@@ -48,7 +48,11 @@ class paramTrees():
 
     def pruebas(self):
         pruebas = Trials()
-        mejor = fmin(fn = self.objetive, space = self.getSpace(), algo = tpe.suggest, max_evals = 80, trials = pruebas)
+        mejor = fmin(fn = self.objetive, 
+                space = self.getSpace(), 
+                algo = tpe.suggest, 
+                max_evals = 80, 
+                trials = pruebas)
         salida = {
                 'criterion': self.criterionConf[mejor['criterion']],
                 'splitter': self.splitterConf[mejor['splitter']],
