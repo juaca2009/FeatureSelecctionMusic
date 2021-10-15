@@ -12,7 +12,7 @@ class paramTrees():
         self.__space = {
                 'criterion': hp.choice('criterion', ["gini", "entropy"]),
                 'splitter':hp.choice('splitter', ["best", "random"]),
-                'max_depth':hp.quniform('max_depth', 10, 500, 10),
+                'max_depth':hp.quniform('max_depth', 10, 1600, 10),
                 'min_samples_split': hp.uniform('min_samples_split', 0, 1),
                 'min_samples_leaf': hp.uniform('min_samples_leaf', 0, 0.5),
                 'max_features': hp.choice('max_features', ["auto", "sqrt", "log2", None])
@@ -43,7 +43,7 @@ class paramTrees():
         modelo = DecisionTreeClassifier(criterion = _space['criterion'], splitter = _space['splitter'],
                                         max_depth = _space['max_depth'], min_samples_split = _space['min_samples_split'],
                                         min_samples_leaf = _space['min_samples_leaf'], max_features = _space['max_features'])
-        precision = cross_val_score(modelo, self.__xTrain, self.__yTrain, cv = 5).mean()
+        precision = cross_val_score(modelo, self.__xTrain, self.__yTrain, scoring="f1_micro", cv = 5).mean()
         return {'loss': -precision, 'status': STATUS_OK}
 
     def pruebas(self):
