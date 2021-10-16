@@ -53,7 +53,7 @@ class decisionTrees():
         mejor = fmin(fn = self.objetive, 
                 space = self.getSpace(), 
                 algo = tpe.suggest, 
-                max_evals = 80, 
+                max_evals = 100, 
                 trials = prueba)
         salida = {
                 'criterion': self.criterionConf[mejor['criterion']],
