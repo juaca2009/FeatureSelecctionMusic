@@ -3,7 +3,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
-from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
 
 def eliminarColumna(_nombre, _data):
@@ -20,17 +21,16 @@ def codificarVariables(_data):
             _data[c] = lbl.transform(list(_data[c].values))
     return _data
 
-
-def escalarAtributos(_data):
-    escalador = RobustScaler()
-    _data.iloc[:,2:3] = escalador.fit(_data.iloc[:,2:3]).transform(_data.iloc[:,2:3]) #lds
-    _data.iloc[:,4:5] = escalador.fit(_data.iloc[:,4:5]).transform(_data.iloc[:,4:5]) #strpk
-    _data.iloc[:,6:7] = escalador.fit(_data.iloc[:,6:7]).transform(_data.iloc[:,6:7]) #cntr
-    _data.iloc[:,8:9] = escalador.fit(_data.iloc[:,8:9]).transform(_data.iloc[:,8:9]) #entr
-    _data.iloc[:,9:10] = escalador.fit(_data.iloc[:,9:10]).transform(_data.iloc[:,9:10]) #danc
-    _data.iloc[:,10:11] = escalador.fit(_data.iloc[:,10:11]).transform(_data.iloc[:,10:11]) #bpm
-    _data.iloc[:,11:12] = escalador.fit(_data.iloc[:,11:12]).transform(_data.iloc[:,11:12]) #tufre
-    _data.iloc[:,13:14] = escalador.fit(_data.iloc[:,13:14]).transform(_data.iloc[:,13:14]) #tmpo
-    _data.iloc[:,16:21] = escalador.fit(_data.iloc[:,16:21]).transform(_data.iloc[:,16:21]) #mfccs
+def escalarGaussianos(_data, _listaColumnas):
+    escalador = StandardScaler()
+    for i in _listaColumnas:
+        _data.iloc[:,[_listaColumnas[i]]] = escalador.fit(_data.iloc[:,[_listaColumnas[i]]]).transform(_data.iloc[:,[_listaColumnas[i]]])
     return _data
+
+def escalarNoGaussianos(_data, _listaColumnas):
+    escalador = MinMaxScaler()
+    for i in _listaColumnas:
+        _data.iloc[:,[_listaColumnas[i]]] = escalador.fit(_data.iloc[:,[_listaColumnas[i]]]).transform(_data.iloc[:,[_listaColumnas[i]]])
+    return _data
+
 
