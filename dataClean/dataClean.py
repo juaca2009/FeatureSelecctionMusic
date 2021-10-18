@@ -3,7 +3,10 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
-from metodos import * 
+from metodosGenerales import eliminarColumna, codificarVariables, overSampling 
+from metodosOutlers import reemplazarOutlersG, reemplazarOutlersNG 
+from metodosEscalar import escalarGaussianos, escalarNoGaussianos
+from metodosGraficar import graficarCajas, graficarHistogramas
 
 
 if __name__ == "__main__":
@@ -29,4 +32,4 @@ if __name__ == "__main__":
             'tmpo':13, 'tufre':11}
     data = escalarGaussianos(data, Lgaussianos)
     data = escalarNoGaussianos(data, LNgaussianos)
-    data.to_csv('../dataClean.csv', sep=',', header=True, index = False)
+    #data.to_csv('../dataClean.csv', sep=',', header=True, index = False)
