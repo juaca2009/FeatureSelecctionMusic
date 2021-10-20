@@ -13,14 +13,15 @@ def main():
     x = data.iloc[:, 0:21]
     y = data.iloc[:, -1]
 
-    arboles = DecisionTreeClassifier(random_state=1, max_depth=100) 
+    arboles = DecisionTreeClassifier(random_state=1, 
+                                     max_depth=100)
 
     estocastico = SGDClassifier(loss = 'squared_hinge', 
                                 penalty = 'l1', 
                                 alpha = 0.661928220292505, 
                                 l1_ratio = 0.831933837820263, 
                                 fit_intercept = True, 
-                                max_iter = 2010.0, 
+                                max_iter = 10010, 
                                 shuffle = True, 
                                 learning_rate = 'adaptive', 
                                 eta0 = 0.6432646081468951, 
@@ -31,13 +32,9 @@ def main():
                                 warm_start = True, 
                                 average = False)
 
-    radom = RandomForestClassifier(n_estimators = 750, 
+    radom = RandomForestClassifier(n_estimators = 100, 
                                   criterion = 'entropy', 
-                                  max_depth = 720.0, 
-                                  min_samples_split = 0.00043803171253885276, 
-                                  min_samples_leaf = 0.003106884152044461, 
-                                  max_features = 'sqrt', 
-                                  warm_start = True) 
+                                  max_features = 'sqrt') 
     
     kVecinos = KNeighborsClassifier(n_neighbors = 10, 
                                    weights = 'distance', 
@@ -46,8 +43,8 @@ def main():
                                    p = 1, 
                                    metric = 'minkowski') 
 
-    selector = featuresSelector(x, y, arboles, estocastico, radom, kVecinos)
-    selector.FeatureSelectionKVecinos(int(sys.argv[1]))
+    selector = featuresSelector(x, y, arboles, estocastico, radom, kVecinos, 0.1)
+    selector.FeatureSelectionRandomForest(int(sys.argv[1]))
 
 
 if __name__ == '__main__':

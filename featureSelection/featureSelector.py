@@ -9,8 +9,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 class featuresSelector():
-    def __init__(self, _x, _y, _arboles, _estocastico, _randomForest, _kVecinos):
-        self.__xTrain, self.__xTest, self.__yTrain, self.__yTest = train_test_split(_x, _y, test_size=0.05, random_state=0)
+    def __init__(self, _x, _y, _arboles, _estocastico, _randomForest, _kVecinos, _tamTest):
+        self.__xTrain, self.__xTest, self.__yTrain, self.__yTest = train_test_split(_x, _y, test_size=_tamTest, random_state=0)
         self.__arbolesDecision = _arboles
         self.__estocastico = _estocastico
         self.__randomForest = _randomForest
