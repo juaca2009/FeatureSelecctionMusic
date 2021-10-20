@@ -10,14 +10,14 @@ class kVecinos():
         self.__x = _x
         self.__y = _y
         self.__space = {
-                'n_neighbors': hp.choice('n_neighbors', [25, 50, 75, 100]),
+                'n_neighbors': hp.choice('n_neighbors', [5, 10, 15, 20, 25]),
                 'weights': hp.choice('weights', ["uniform", "distance"]),
                 'algorithm': hp.choice('algorithm', ["auto", "ball_tree", "kd_tree", "brute"]),
                 'leaf_size': hp.uniform('leaf_size', 100, 200),
                 'p': hp.choice('p', [1, 2]), 
                 'metric': hp.choice('metric', ["euclidean", "manhattan", "minkowski"])
                 }
-        self.nNeighborsConf = {0:25, 1:50, 2:75, 3:100}
+        self.nNeighborsConf = {0:5, 1:10, 2:15, 3:20, 4:25}
         self.weightsConf = {0: "uniform", 1:"distance"}
         self.algorithmConf = {0: "auto", 1: "ball_tree", 2: "kd_tree", 3: "brute"}
         self.pConf = {0:1, 1:2}
@@ -44,7 +44,7 @@ class kVecinos():
         mejor = fmin(fn = self.objetive,
                      space = self.getSpace(),
                      algo = tpe.suggest,
-                     max_evals = 500,
+                     max_evals = 200,
                      trials = prueba)
         salida = {
                 'n_neighbors': self.nNeighborsConf[mejor['n_neighbors']],
