@@ -39,13 +39,13 @@ def main():
     #mejorEstocastico = estocastico.pruebas()
     #print(mejorEstocastico)
 
-    #random = randomForest(x, y)
-    #mejorRandom = random.pruebas()
-    #print(mejorRandom)
+    random = randomForest(xRandom, yRandom)
+    mejorRandom = random.pruebas()
+    print(mejorRandom)
 
-    vecinos = kVecinos(xVecinos, yVecinos)
-    mejorVecinos = vecinos.pruebas()
-    print(mejorVecinos)
+    #vecinos = kVecinos(xVecinos, yVecinos)
+    #mejorVecinos = vecinos.pruebas()
+    #print(mejorVecinos)
 
 if __name__ == '__main__':
     main()
