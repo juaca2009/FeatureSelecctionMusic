@@ -4,13 +4,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_score
 from hyperopt import hp, fmin, tpe, STATUS_OK, Trials
+from hyperopt.pyll import scope
 
 class kVecinos():
     def __init__(self, _x, _y):
         self.__x = _x
         self.__y = _y
         self.__space = {
-                'n_neighbors': hp.choice('n_neighbors', [5, 10, 15, 20, 25]),
+                'n_neighbors': scope.int(hp.quniform('n_neighbors', 10, 50, 1)),
                 'weights': hp.choice('weights', ["uniform", "distance"]),
                 'algorithm': hp.choice('algorithm', ["auto", "ball_tree", "kd_tree", "brute"]),
                 'leaf_size': hp.uniform('leaf_size', 100, 200),
@@ -44,10 +45,10 @@ class kVecinos():
         mejor = fmin(fn = self.objetive,
                      space = self.getSpace(),
                      algo = tpe.suggest,
-                     max_evals = 200,
+                     max_evals = 760,
                      trials = prueba)
         salida = {
-                'n_neighbors': self.nNeighborsConf[mejor['n_neighbors']],
+                'n_neighbors': mejor['n_neighbors'],
                 'weights': self.weightsConf[mejor['weights']],
                 'algorithm': self.algorithmConf[mejor['algorithm']],
                 'leaf_size': mejor['leaf_size'],

@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from hyperopt import hp, fmin, tpe, STATUS_OK, Trials
+from hyperopt.pyll import scope
 
 
 class randomForest():
@@ -11,9 +12,9 @@ class randomForest():
         self.__x = _x
         self.__y = _y
         self.__space = {
-                'n_estimators': hp.choice('n_estimators', [135, 136, 137, 138, 139, 140 ]),
+                'n_estimators': scope.int(hp.quniform('n_estimators', 10, 200, 1)),
                 'criterion': hp.choice('criterion', ["gini", "entropy"]),
-                'max_depth': hp.uniform('max_depth', 760, 780),
+                'max_depth': hp.quniform('max_depth', 760, 800, 10),
                 'min_samples_split': hp.uniform('min_samples_split', 0, 1),
                 'min_samples_leaf': hp.uniform('min_samples_leaf', 0, 0.5),
                 'max_features': hp.choice('max_features', ["auto", "sqrt", "log2"]),
@@ -46,10 +47,10 @@ class randomForest():
         mejor = fmin(fn = self.objetive,
                      space = self.getSpace(),
                      algo = tpe.suggest,
-                     max_evals = 300,
+                     max_evals = 260,
                      trials = prueba)
         salida = {
-                'n_estimators': self.stimatorsConf[mejor['n_estimators']],
+                'n_estimators': mejor['n_estimators'],
                 'criterion': self.criterionConf[mejor['criterion']],
                 'max_depth': mejor['max_depth'],
                 'min_samples_split': mejor['min_samples_split'],
