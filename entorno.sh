@@ -1,9 +1,9 @@
 #!/bin/bash
 iniciar_entorno(){
 	
-	cd /home/juan/Documentos/"entornos python"/"feature selection"/bin
+	cd ~/.virtualenvs/"feature selection"/bin
 	source activate
-	cd ../../../proyectos/"Trabajo de Grado"/FeatureSelecctionMusic
+	cd ../../../Documentos/proyectos/"Trabajo de Grado"/FeatureSelecctionMusic
 }
 
 iniciar_entorno
