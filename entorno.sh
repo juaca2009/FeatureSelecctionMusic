@@ -6,5 +6,4 @@ iniciar_entorno(){
 	cd ../../../Documentos/proyectos/"Trabajo de Grado"/FeatureSelecctionMusic
 }
 
-
 iniciar_entorno
