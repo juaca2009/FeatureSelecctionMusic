@@ -1,1 +1,5 @@
 __pycache__/
+/.idea/
+/hiperParametros/.idea/
+/featureSelection/.idea/
+/dataClean/.idea/
