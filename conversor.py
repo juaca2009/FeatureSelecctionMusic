@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 class Conversor:
@@ -55,11 +54,11 @@ class Conversor:
                         self.__escalar['NG'][i][1] - self.__escalar['NG'][i][0])
 
     def transformar_entrada(self, _data_frame):
-        sin_nombre = _data_frame.drop(['nombre'], axis=1)
+        sin_nombre = _data_frame.drop(['Name'], axis=1)
         self.set_dataframe(sin_nombre)
         self.analizar_outlers()
         self.escalar_valores()
-        self.__data_frame.insert(0, "nombre", _data_frame["nombre"].values[0])
+        self.__data_frame.insert(0, "Name", _data_frame["Name"].values[0])
 
     def set_dataframe(self, _data_frame):
         self.__data_frame = _data_frame
@@ -69,14 +68,18 @@ class Conversor:
 
 
 if __name__ == '__main__':
-    columnas = ['nombre', 'flt', 'lds', 'alds', 'strpk', 'nrg', 'flu', 'entr', 'danc', 'bpm',
+    columnas = ['Name', 'flt', 'lds', 'alds', 'strpk', 'nrg', 'flu', 'entr', 'danc', 'bpm',
                 'ptch', 'mfcc1', 'mfcc2', 'mfcc3', 'mfcc4']
     datosPrueba = [["olvidala", 0.240082, -14.933464, 0.897602, 1.146760, 0.022006, 0.071873, 7.002771, 1.288145, 114.862709,
                     0.419456, -723.15356, 104.381910, 13.517786, 49.038660]]
-    df = pd.DataFrame(datosPrueba, columns=columnas)
-    print(df)
     a = Conversor()
-    a.transformar_entrada(df)
-    df = a.get_dataframe()
-    print("Resultado final")
-    print(df)
+    data_limpia = pd.DataFrame(columns=columnas)
+    data = pd.read_csv("dataClean/FeaturesObtain.csv", sep=',', header='infer')
+    data = data[columnas]
+    for i in range(len(data)):
+        fila_temp = data.iloc[i]
+        fila_temp = pd.DataFrame(fila_temp).transpose()
+        a.transformar_entrada(fila_temp)
+        fila_temp = a.get_dataframe()
+        data_limpia = data_limpia.append(fila_temp,ignore_index=True)
+    data_limpia.to_csv('dataCleanFinalConNombres', index=False)
