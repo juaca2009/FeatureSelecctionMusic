@@ -82,4 +82,4 @@ if __name__ == '__main__':
         a.transformar_entrada(fila_temp)
         fila_temp = a.get_dataframe()
         data_limpia = data_limpia.append(fila_temp,ignore_index=True)
-    data_limpia.to_csv('dataCleanFinalConNombres', index=False)
+    data_limpia.to_csv('dataCleanFinalConNombres.csv', index=False)

@@ -19,7 +19,7 @@ if __name__ == "__main__":
     data = eliminarColumna(['Name', 'rof'], data)
     data = codificarVariables(data)
     data = overSampling(data)
-    #graficarHistogramas(data, "Histograma con Over Sampling de ")
+    # graficarHistogramas(data, "Histograma con Over Sampling de ")
     data = reemplazarOutlersG(data, Lgaussianos)
     data = reemplazarOutlersNG(data, LNgaussianos)
     Lgaussianos = {
@@ -32,4 +32,4 @@ if __name__ == "__main__":
             'tmpo':13, 'tufre':11}
     data = escalarGaussianos(data, Lgaussianos)
     data = escalarNoGaussianos(data, LNgaussianos)
-    #data.to_csv('../dataClean.csv', sep=',', header=True, index = False)
+    # data.to_csv('../dataClean.csv', sep=',', header=True, index = False)
